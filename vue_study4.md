@@ -374,6 +374,7 @@ Vue.use(VueRouter)
 </template>
 ```
 ルーターの設定ファイル`route.js`を作成し`Home`と`Products`のコンポーネントを読み込みパスとマッピングします。    
+コードを見ていきましょう。
 
 `src/router.js`
 ```js
@@ -390,12 +391,12 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      //importしたコンポーネントと紐ずけ
+      //importしたコンポーネントとパスを紐ずけ
       component: Home
     },
     {
       path: '/product',
-      //importしたコンポーネントと紐ずけ
+      //importしたコンポーネントとパスを紐ずけ
       component: Product
     }
   ]
@@ -428,3 +429,16 @@ new Vue({
   </div>
 </template>
 ```
+URLに注目してください、さっき指定したpassになってますね。
+![home](https://i.imgur.com/KGTfSTf.png)
+
+そして商品状況のリンクをクリックすると...     
+こちらも先ほど指定したpassになってますね
+
+![pro](https://i.imgur.com/hQ4loX7.png)
+
+こんな感じでVue Routerを使っていきます。細かい説明ができなかったのですが、大体の使い方はわかったと思います.     
+
+次は簡単なアプリケーションの作成の紹介をしていきます。
+次は最後の会です。少しはVueへの関心、理解が深まったでしょうか？
+来週もよろしくお願いします。

@@ -323,3 +323,108 @@ export default {
 こんな感じでVuexは利用されてます。    
 勉強段階での規模のアプリケーションでの状態管理のVuexの導入は面倒に感じますよね。。。。    
 ただ、規模が大きくなるにつれて必要性が大きくなるので、規模が大きくなりそうなアプリケーションは、途中からのVuexの導入は大変(いろんな記事より)なので、開発初期にVuexの導入を検討してください。
+
+
+###### Vue Routerについて
+
+ルーティングとは...
+
+
+インストール
+```
+#最新版のインストール
+$npm install vue-router
+#今回紹介するバージョン
+$npm install vue-router@3.0.1
+```
+
+`src/router.js`
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+//プラグインとして登録
+Vue.use(VueRouter)
+```
+インストールすると,次のコンポーネントが使用可能になります。    
+
+`<router-view>`:|ルートとマッチしたコンポーネントを描写する    
+
+`<router-link>`:|ルートのリンクを作成
+
+実際のrouterの使い方
+
+フォルダの構造について特に決まりはないですが、ルートと直接、結びつけるコンポーネントは`views`や`pages`といった名前のフォルダにまとめる。
+
+次の２つのSFCはテンプレートだけのシンプルなコンポーネントです。
+
+`src/views/Home.vue`
+```html
+<template>
+  <div class="home">
+    <h1>Home</h1>
+  </div>
+</template>
+```
+`src/views/Product.vue`
+```html
+<template>
+  <div class="product">
+    <h1>商品情報</h1>
+  </div>
+</template>
+```
+ルーターの設定ファイル`route.js`を作成し`Home`と`Products`のコンポーネントを読み込みパスとマッピングします。    
+
+`src/router.js`
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+// ルート用のコンポーネントを読み込む
+import Home from '@/views/Home'
+import Product from '@/views/Product'
+// Vuexと同様で最初にプラグインとして登録
+Vue.use(VueRouter)
+// VueRouterインスタンスを生成する
+const router = new VueRouter({
+  // URLのパスと紐づくコンポーネントをマッピング
+  routes: [
+    {
+      path: '/',
+      //importしたコンポーネントと紐ずけ
+      component: Home
+    },
+    {
+      path: '/product',
+      //importしたコンポーネントと紐ずけ
+      component: Product
+    }
+  ]
+})
+// 生成したVueRouterインスタンスをエクスポート
+export default router
+```
+
+`src/main.js`
+
+```js
+import router from './router.js'
+new Vue({
+  el: '#app',
+  router, // アプリケーションに登録
+  render: h => h(App)
+})
+```
+
+`src/App.vue`
+```html
+<template>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/product">商品情報</router-link>
+    </nav>
+    <!-- ここにパスと一致したコンポーネントが埋め込まれる -->
+    <router-view />
+  </div>
+</template>
+```

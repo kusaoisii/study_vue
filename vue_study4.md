@@ -26,4 +26,296 @@
 そこで、この解決策となるのが`Vuex`です。
 さらに、全てのコンポーネントから１つのデータを参照するため整合性も保たれるといったメリットもあります。
 
-今までのデータのやり取りのイメージは`props`、`$emit`を使った、限られたコンポーネント間でのやり取りしかできなかったイメージですが、`Vuex`を使うことでアプリケーション全体まで状態の管理が対象になりました。
+今までのデータのやり取りのイメージは`props`、`$emit`を使った、限られたコンポーネント間でのやり取りしかできなかったイメージですが、`Vuex`を使うことでアプリケーション全体まで状態の管理の対象になりました。
+
+Vue CLIをプロジェクトを作った方はVuexのダウンロードもしてみましょう。
+(VuexではES2015を利用しているため、対応してないブラウザをサポートする場合,`babel-polyfill`も)
+
+
+```
+$npm install vuex babel-polyfill
+```
+
+準備として..   
+
+`src/store.js`
+```js
+import 'babel-profill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+//プラグインとして登録
+Vue.use(Vuex)
+```
+
+では早速、解説していきます。
+
+Vuexを使ってカウンタの数値を増やすだけのシンプルなストア構造をみてみましょう。
+
+コードを簡単に説明します。
+
+Vuexは状態を管理するための「ストア」を作成します。ストアはアプリケーション内に作った「仮想のデータベース」のようなものです。まずは、`src/`直下に`store.js`ファイルを作成し、`Vuex.Store`コンストラクタを使ってストアのインスタンスを作成します。
+`state`はコンポーネントの`data`プロパティ、`mutations`は`methods`に機能が似ていますね。
+
+`src/store.js`
+
+```js
+//import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+// ストアを作成
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    // カウントアップするミューテーションを登録
+    increment(state) {
+      state.count++
+    }
+  }
+})
+export default store
+```
+`main.js`ではstoreで作ったデータへのアクセスしてます。まず`store.js`ファイルをインポートして、`store.state.count`の形でアクセスできます。  
+また、`store`インスタンスで登録されている`mutations`は`store.commit`で実行できます。
+
+`src/main.js`
+```js
+//store.jsをインポート
+//@はデフォルトで登録されている`src`ディレクトリのエイリアス
+import store from '@/store.js'
+
+console.log(store.state.count) // -> 0
+// incrementをコミットする
+store.commit('increment')
+// もう一度アクセスしてみるとカウントが増えている
+console.log(store.state.count) // -> 1
+
+```
+実際に書いた人は.....                 
+`npm run dev`を実行してconsoleを開いてみてください。
+
+![実行結果](https://i.imgur.com/P9sO0oT.png)
+
+Vuex内のインスタンス参照方法
+
+Vuexのインスタンスは、Vue.js本体のように`this`を使用しないようです。
+よって、必要なプロパティや、メソッドは、引数として渡されます。
+
+```js
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+    //アロー関数(function式を省略できるやつ)を使うと...
+    decrement : state => {state.count-- }
+  }
+})
+```
+アロー関数についての記事=> [URL](https://qiita.com/may88seiji/items/4a49c7c78b55d75d693b)
+
+
+コンポーネントとVuexの各機能を図にしたものです。  
+一方通行の線が１本しかないため実は意外と単純なのです。   
+`コンポーネント`からステートを更新したいとなった時、その間にある`アクション`と`ミューテーション`を使うことがわかります。
+
+![図](https://coinbaby8.com/wp-content/uploads/2018/11/vuex.png)
+
+[図の引用](https://coinbaby8.com/nuxt-vuex-beginner.html)
+
+実際にコンポーネントと一緒に使う前に、各機能について紹介します。
+
+ステート(state)
+
+ステートは、ストアで管理している状態そのものであり、コンポーネントで登場した`data`に似てます。ステートはミューテーションでしか変更することはできません。
+
+```js
+const store = new Vuex.Store({
+  state: {
+    message: 'メッセージ'
+  }
+})
+```
+呼び出し方はこんな感じ
+```js
+store.state.count
+```
+
+ゲッター(getter)
+
+ゲッターは、ステートを取得するための算出データです。  
+引数が欲しい時はメソッド関数で返します。
+`return`で値が返されてますね。
+ゲッターを介さず、ステートにアクセスすることもできますが、使う側が混乱しないように`getters` に統一することが進められているようです。
+
+
+```js
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+      { id: 3, name: 'いちご', price: 300 }
+    ]
+  },
+  getters: {
+    // 単純にステートを返す
+    count(state) {
+      return state.count
+    },
+    // リストの各要素の price プロパティの中から最大数値を返す
+    max(state) {
+      return state.list.reduce((a, b) => {
+        return a > b.price ? a : b.price
+      }, 0)
+    }
+  }
+})
+```
+呼び出し方
+```js
+store.getters.count
+store.getters.max
+```
+
+ミューテーション(mutations)
+
+ステートを変更できる唯一のメゾッドであり、コンポーネントで言う所の`methods`です。
+引数としての情報は
+1,state:ステート
+2,payload:コミットからの引数
+
+```js
+const store = new Vuex.Store({
+  // ...
+  mutations: {
+    mutationType(state, payload) {
+      state.count = payload
+    }
+  }
+})
+```
+
+コミット(commit)   
+登録されているミューテーションを呼びだす機能を持っています。
+```js
+store.commit('mutationType', payload)
+```
+
+この他にも`action`や、これを呼びだす`dispatch`というものもあります。
+
+
+[(アクションについての公式ドキュメント)](https://vuex.vuejs.org/ja/guide/actions.html)
+
+実際のコンポーネントでストアの使用
+
+まずは`main.js`に登録します。これで、どこからでも`store.js`で作ったストアが使えます。
+
+`src/main.js`
+```js
+//....
+import store from './store.js'
+//.....
+new Vue({
+  ///.....
+  store,
+  ///.....
+  })
+```
+以下の`store.js`では特に難しいことはやってません。
+先ほど、説明しなかった`actions`も`commit`でミューテーションを呼びだすことで更新の処理をしているだけです。    
+
+`src/store.js`
+```js
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    message: '初期メッセージ'
+  },
+  getters: {
+    // messageを使用するゲッター
+    message(state) {
+      return state.message
+    }
+  },
+  mutations: {
+    // メッセージを変更するミューテーション
+    setMessage(state, payload) {
+      state.message = payload.message
+    }
+  },
+  actions: { // メッセージの更新処理
+    doUpdate({commit}, message) {
+      commit('setMessage', {message})
+    }
+  }
+})
+export default store
+```
+メッセージの算出プロパティと、その下に編集フォーム用の「EditForm」コンポーネントのカスタムだぐを記述しています。
+`src/App.vue`
+```js
+<template>
+  <div class="app">
+    <h1>{{ message }}</h1>
+    <EditForm/>
+  </div>
+</template>
+<script>
+import store from './store'
+// 子コンポーネントを読み込む
+import EditForm from './components/EditForm'
+export default {
+  name: 'app',
+  components: {
+    EditForm
+  },
+  computed: {
+    // ローカルの message とストアの message を同期
+    message() {
+      return store.getters.message
+    }
+  }
+}
+</script>
+```
+ステートはミューテーション以外から書き換えていけないというルールがあるので、`v-model`を使うと自動的に値を書き和えようとするため、エラーになってしまいます。そこで、算出プロパティにセッターを使うと`v-model`が使えます。   
+
+`src/components/EditForm.vue`
+```js
+<template>
+  <div class="edit-form">
+    <input v-model="message">
+  </div>
+</template>
+
+<script>
+import store from '../store'
+export default {
+  name: 'EditForm',
+  computed: {
+    message: {
+      get() { return store.getters.message },
+      set(value) { store.dispatch('doUpdate', value) }
+    }
+  },
+  methods: {
+    doUpdate(event) {
+      // input の値を持ってディスパッチ
+      store.dispatch('doUpdate', event.target.value)
+    }
+  }
+}
+</script>
+```

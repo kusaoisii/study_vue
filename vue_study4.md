@@ -333,7 +333,10 @@ export default {
 ###### Vue Routerについて
 
 ルーティングとは...
-URLをディレクトリ構造のようにして、画面を遷移させること？
+URLをディレクトリ構造のようにして、画面を遷移させること！？
+
+こんな感じ
+![vue](https://i.imgur.com/D3bELnr.png)
 
 
 

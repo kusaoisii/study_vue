@@ -320,6 +320,11 @@ export default {
 </script>
 ```
 
+[ここでいじってみて下さい](https://kusa-vuex.firebaseapp.com/)
+
+実行結果
+![](https://i.imgur.com/zEbsoUL.png)
+
 こんな感じでVuexは利用されてます。    
 勉強段階での規模のアプリケーションでの状態管理のVuexの導入は面倒に感じますよね。。。。    
 ただ、規模が大きくなるにつれて必要性が大きくなるので、規模が大きくなりそうなアプリケーションは、途中からのVuexの導入は大変(いろんな記事より)なので、開発初期にVuexの導入を検討してください。
@@ -429,6 +434,9 @@ new Vue({
   </div>
 </template>
 ```
+
+[ちょっといじってみて下さい](https://study-router.firebaseapp.com)
+
 URLに注目してください、さっき指定したpassになってますね。
 ![home](https://i.imgur.com/KGTfSTf.png)
 

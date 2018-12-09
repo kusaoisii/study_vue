@@ -154,6 +154,5 @@ $ firebase deploy
 以上でコードの紹介、復習は終了です。
 形になってきたら,buildしてdeployしてみましょう。
 VueRouterも使われていますのでGitHubで復習してみてください。
-Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました)
-
+Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)(開発中)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
 以上で、この会を終了します。参加ありがとうございました。

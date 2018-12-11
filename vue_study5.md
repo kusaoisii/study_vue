@@ -143,7 +143,15 @@ $ firebase deploy
 開発の手順を理解したところで、ソースコードを書いていく作業に移ります。
 一から作るのは大変だと思うので、今回参考にしたのが山本先輩が技術書店にて買ってきてくれた「[Vue.jsとFirebaseで作るミニWebサービス](https://nextpublishing.jp/book/9884.html)」という本です。
 
+こんな感じのものが出来上がります。
+
+![](https://i.imgur.com/T1MEFvi.png)
+
+
 この本では、僕が今まで紹介してきた文法の知識で`markdownエディタ`を作ることができます。
+
+ローカルでいいからのアプリ作りたいって人は、記事見つけてきたので、この記事を参考に参考にしてtodoアプリを作ってみてください。
+url=>[url](https://qiita.com/moonglows76/items/358ef3cd1566c38ece3a)
 
 全部のコードを書くのは時間的に厳しいので、今までの復習を兼ねて、使われているコードの紹介をしていきます。
 
@@ -202,7 +210,7 @@ new Vue({
 実行結果
 ![実行結果](https://i.imgur.com/4Vd5sHe.png)
 
-次はサイドの書いたmarkdownのリスト表示の一部分のコード。   
+次はサイドの保存してあるmarkdownのリスト表示の一部分のコード。   
 分けて説明していきます。
 
 
@@ -305,11 +313,14 @@ var app = new Vue({
 以上でコードの紹介、復習は終了です。
 もし作る気分になったら,GitHubのソースコードを見よう見まねで作ってみてください。   
 
+作るとこんな感じになる
+
 ![](https://i.imgur.com/T1MEFvi.png)
 形になってきたら,buildしてdeployしてみましょう。
 VueRouterも使われていますのでGitHubで復習してみてください。
 Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のダサダサアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
 
+そしてちょっと先の話をすると。。。
 ちょっと形になってきたら、デザインも気になると思うので`Elemnt UI`や`vuetify`などのデザインフレームワークが提供してくれている、コンポーネントなども使ってみてください。多分デザのバイトでは`element ui`が結構使われています。      
 (僕のアプリでは`vuetify`を使っていますが....)
 
@@ -317,10 +328,16 @@ Vuexは使われてませんが,Googleのユーザー情報など登録しとく
 
 ![](https://i.imgur.com/cU0pjEO.png)
 
+
+[elemet uiのURL](https://element.eleme.io/#/en-US)      
+[vuetifyのURL](https://vuetifyjs.com/ja/)
+
 ##### Vueを復習したい人向けての話
 
 先ほど使った`vue-cli`の環境はディレクトリ構造がちょっと
 難しいので、ただ文法をマスターしたい人はCDNを<script>で持ってくる環境をお勧めします。環境構築は必要ないので楽です。
 [こんな感じ](https://jsfiddle.net/kusaoisii/f3x4u5L0/4/)
 ただ,vue.jsの本命的なコンポーネントファイル`.vue`はVue-cliを導入しないといけないので、コンポーネントを学んだあと`.vue`ファイルを触れたくなった時,`vue-cli`の導入してもいいと思います。
+
+
 以上で、この会を終了します。参加ありがとうございました。

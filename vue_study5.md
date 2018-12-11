@@ -23,6 +23,8 @@
 
 `vue-cli`を導入していきます。コマンドを以下の通り
 
+ [windowsの方は....](https://qiita.com/Syn/items/b5a19e87c979b062168a)        
+[npmインストールしてない方は](https://qiita.com/taketakekaho/items/dd08cf01b4fe86b2e218)
 ```
 //vue-cliのインストール
 $ npm install -g vue-cli
@@ -149,6 +151,13 @@ $ firebase deploy
 
 
 この本では、僕が今まで紹介してきた文法の知識で`markdownエディタ`を作ることができます。
+
+まだ開発中ですが、一応僕のも載せときます。[僕のアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます.色々とおかしいですが...
+
+
+![](https://i.imgur.com/CjEqeeS.png)
+
+色々とおかしいですが....
 
 ローカルでいいからのアプリ作りたいって人は、記事見つけてきたので、この記事を参考に参考にしてtodoアプリを作ってみてください。
 url=>[url](https://qiita.com/moonglows76/items/358ef3cd1566c38ece3a)
@@ -318,7 +327,7 @@ var app = new Vue({
 ![](https://i.imgur.com/T1MEFvi.png)
 形になってきたら,buildしてdeployしてみましょう。
 VueRouterも使われていますのでGitHubで復習してみてください。
-Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のダサダサアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
+Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
 
 そしてちょっと先の話をすると。。。     
 ちょっと形になってきたら、デザインも気になると思うので`Elemnt UI`や`vuetify`などのデザインフレームワークが提供してくれている、コンポーネントなども使ってみてください。多分デザのバイトでは`element ui`が結構使われています。      

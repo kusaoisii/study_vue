@@ -320,7 +320,7 @@ var app = new Vue({
 VueRouterも使われていますのでGitHubで復習してみてください。
 Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のダサダサアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
 
-そしてちょっと先の話をすると。。。
+そしてちょっと先の話をすると。。。     
 ちょっと形になってきたら、デザインも気になると思うので`Elemnt UI`や`vuetify`などのデザインフレームワークが提供してくれている、コンポーネントなども使ってみてください。多分デザのバイトでは`element ui`が結構使われています。      
 (僕のアプリでは`vuetify`を使っていますが....)
 

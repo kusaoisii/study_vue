@@ -157,7 +157,7 @@ url=>[url](https://qiita.com/moonglows76/items/358ef3cd1566c38ece3a)
 
 ##### 今までの会の復習
 
-これから紹介するのは、このアプリのエディタのコンポーネントで使われているードになります
+これから紹介するのは、このアプリのエディタのコンポーネントで使われているコードになります
 
 このURLからみてみてください。＝＞　[GitHub](https://github.com/nabettu/mymarkdown/blob/master/src/components/Editor.vue)
 

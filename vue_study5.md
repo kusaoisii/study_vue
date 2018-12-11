@@ -149,16 +149,178 @@ $ firebase deploy
 
 ##### 今までの会の復習
 
+これから紹介するのは、このアプリのエディタのコンポーネントで使われているードになります
+
+このURLからみてみてください。＝＞　[GitHub](https://github.com/nabettu/mymarkdown/blob/master/src/components/Editor.vue)
+
+このコードではエディタ部分のSFCが書かれています。
+
+例えば、よく使われる,ボタンのハンドリング部分.
+Vue.jsでは`v-on`を使ってイベントを発火させます。`@`というのはこの省略形です。今回はこの`v-on`でmethods内で定義した`logout`メソッドをハンドリングしています。
+
+```js
+~
+5:  <button @click="logout">ログアウト</button>
+~
+~
+59:  methods: {
+60:     logout: function() {
+         //ログアウト
+61:       firebase.auth().signOut();
+62:     },
+~
 ~
 
+```
+簡単なコードの方がわかりやすいので..
+`v-on`、`methods`を使ったコードの紹介をしときます。
+>[「jsfiddleで実行」](https://jsfiddle.net/kusaoisii/f3x4u5L0/4/)
+
+```html
+<div id="app">
+  <!-- countプロパティを表示する -->
+  <p>{{ count }}回クリックしたよ！ </p>
+  <!-- このボタンをクリックするとincrementメソッドが呼び出される -->
+  <button v-on:click="increment">カウントを増やす</button>
+  <!-- v-onは"@"と書きえ、省略することができます。 -->
+</div>
+```
+```js
+new Vue({
+  el: '#app',
+  data: {
+    count: 0
+  },
+  methods: {
+    // ボタンをクリックしたときのハンドラ
+    increment: function () {
+      this.count += 1 // 処理は再代入するだけでOK！
+    }
+  }
+})
+```
+実行結果
+![実行結果](https://i.imgur.com/4Vd5sHe.png)
+
+次はサイドの書いたmarkdownのリスト表示の一部分のコード。   
+分けて説明していきます。
+
+
+```js
+~
+8:  <div class="memoList" v-for="(memo, index) in memos" :key="index" @click="selectMemo(index)" :data-selected="index == selectedIndex">
+~
+```
+まずはfor文の説明です。
+Vue.jsではforは`v-for`を使います。
+dataプロパティで定義された`mamos`を回して、`(memo,index)`の`memo`には要素、`index`にはインデックスが格納されます。    
+また、使うデータを保持するデータプロパティ(`data()`)ではreturnでオブジェクトとして返す形になることも忘れないでください。
+
+
+```js
+~
+8:   ~ v-for="(memo, index) in memos" ~
+~
+27: data() {
+28:    return {
+29:      memos: [
+30:        {
+31:          markdown: ""
+32:        }
+33:      ],
+34:      selectedIndex: 0
+35:    };
+36:  },
+~
+```
+
+ここでは`v-bind`が出てきました。
+`:data-selected="index == selectedIndex"`ではDOM要素(data-selected)に`index == selectedIndex`の結果をデータバインディングすることで、データの変更をするたびに、バインドされたDOM要素が更新されます。
+ここでは、この`data-selected`によって背景の色が変わるよう`css`側で設定されてます。(css(scss)の説明は省きます)
+```js
+8: ~ :data-selected="index == selectedIndex" ~
+```
+
+
+`v-bind`は`<input>`はテキスト入力欄によく使われえる要素なので覚えときましょう。    
+>[「jsfiddleで実行」](https://jsfiddle.net/kusaoisii/ca0v2e67/3/)  
+
+```html
+<input v-bind:value="message" v-on:change="handleInput">
+<pre>{{ message }}</pre>
+```
+
+```js
+new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue.js',
+  },
+  methods: {
+    handleInput: function (event) {
+      // 代入前に何か処理を行う…
+      this.message = event.target.value
+    }
+  }
+})
+```
+`handleInput`では入力データを`message`に代入しています。
+実行結果
+![実行結果](https://i.imgur.com/rU3sZzN.png)
+
+次はVueでの条件分岐の仕方は`v-if`を使います。   
+条件=trueだった場合のみ、この要素が表示,実行されます。
+
+```js
+12: ~ v-if="memos.length > 1" ~
+```
+例えば、以下では`v-if`は`show`が`true`の時しかp要素を表示しません。
+
+>[「jsfiddleで実行](https://jsfiddle.net/kusaoisii/rz2fac6y/)
+
+```html
+<button v-on:click="show=!show">切り替え</button>
+<p v-if="show">Hello Vue.js!</p>
+```
+```js
+var app = new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
+```
+実行結果
+![実行結果](https://i.imgur.com/o89wF6e.png)
+
+他にも、親子間でのコンポーネント(ここでは親がsrc/views/Top.vue)でデータをや受け渡しに使う方法の一つ`props`を使っています.`props`は親コンポーネントから子コンポーネントにデータを渡す時に子コンポーネント側で受け取る時`props`を利用します。
+
+```
+26:  props: ["user"],
+```
+
+![親子関係](https://1.bp.blogspot.com/-3Sdz6RsRJ-M/WA6zeqjGszI/AAAAAAAAEZg/sHy0PjcR7_AziwqMh3f2wU09t4dSQj54gCLcB/s400/props-events.png)
+
+
 以上でコードの紹介、復習は終了です。
+もし作る気分になったら,GitHubのソースコードを見よう見まねで作ってみてください。   
+
+![](https://i.imgur.com/T1MEFvi.png)
 形になってきたら,buildしてdeployしてみましょう。
 VueRouterも使われていますのでGitHubで復習してみてください。
-Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)(開発中)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
+Vuexは使われてませんが,Googleのユーザー情報など登録しとくと便利だと思います。(僕は勉強のために導入しました [僕のダサダサアプリ(開発中)](https://kusa-markdown.firebaseapp.com/#/)と[コード](https://github.com/kusaoisii/vuemarkdown)を載せておきます)   
 
-簡単なマテリアルデザインの紹介
+ちょっと形になってきたら、デザインも気になると思うので`Elemnt UI`や`vuetify`などのデザインフレームワークが提供してくれている、コンポーネントなども使ってみてください。多分デザのバイトでは`element ui`が結構使われています。      
+(僕のアプリでは`vuetify`を使っていますが....)
 
-〜〜〜
+こんな感じで、element uiがいい感じのものを提供してくれています。
 
+![](https://i.imgur.com/cU0pjEO.png)
 
+##### Vueを復習したい人向けての話
+
+先ほど使った`vue-cli`の環境はディレクトリ構造がちょっと
+難しいので、ただ文法をマスターしたい人はCDNを<script>で持ってくる環境をお勧めします。環境構築は必要ないので楽です。
+[こんな感じ](https://jsfiddle.net/kusaoisii/f3x4u5L0/4/)
+ただ,vue.jsの本命的なコンポーネントファイル`.vue`はVue-cliを導入しないといけないので、コンポーネントを学んだあと`.vue`ファイルを触れたくなった時,`vue-cli`の導入してもいいと思います。
 以上で、この会を終了します。参加ありがとうございました。

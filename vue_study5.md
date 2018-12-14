@@ -107,6 +107,9 @@ $ firebase init
 $ firebase use --add
 ```
 
+```
+$ firebase login
+```
 ![](https://i.imgur.com/cHzXsc2.png)
 
 次に、テンプレートのままだとパスが開発用の状態なので、ホスティングしてもらうための準備として、次の2つのファイルを変更します。  

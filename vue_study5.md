@@ -32,7 +32,7 @@ $ vue -h
 
 //自分の作業ディレクトリに移動
 $ mkdir vuestudy
-$ cd vuestydy
+$ cd vuestuydy
 
 //テンプレのダウンロード
 //vueappはプロジェクト名(お好きにどうぞ)
